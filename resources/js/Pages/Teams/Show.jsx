@@ -6,6 +6,7 @@ export default function Show({ team, teamRoles, currentUserRole }) {
     const [showInviteForm, setShowInviteForm] = useState(false);
     const [invitationLink, setInvitationLink] = useState(null);
     
+    // ✅ Vérification des permissions
     const isOwnerOrManager = ['owner', 'manager'].includes(currentUserRole?.slug);
     const isOwner = currentUserRole?.slug === 'owner';
 
@@ -18,7 +19,6 @@ export default function Show({ team, teamRoles, currentUserRole }) {
         e.preventDefault();
         post(route('teams.invitations.store', team.id), {
             onSuccess: (response) => {
-                // Récupérer le lien d'invitation depuis la réponse
                 const link = response.props?.flash?.link || null;
                 setInvitationLink(link);
                 reset();
@@ -58,7 +58,7 @@ export default function Show({ team, teamRoles, currentUserRole }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6">
-                            {/* En-tête de l'équipe */}
+                            {/* En-tête */}
                             <div className="flex justify-between items-start mb-6">
                                 <div>
                                     <h1 className="text-2xl font-bold">{team.name}</h1>
@@ -75,6 +75,7 @@ export default function Show({ team, teamRoles, currentUserRole }) {
                                     </div>
                                 </div>
                                 <div className="flex gap-2">
+                                    {/* ✅ BOUTON INVITER - Visible uniquement pour Owner/Manager */}
                                     {isOwnerOrManager && (
                                         <button
                                             onClick={() => setShowInviteForm(!showInviteForm)}

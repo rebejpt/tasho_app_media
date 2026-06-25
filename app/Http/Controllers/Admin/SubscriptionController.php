@@ -41,7 +41,7 @@ class SubscriptionController extends Controller
             'is_active' => true,
         ]);
 
-        return redirect()->route('admin.subscriptions')->with('success', 'Abonnement créé.');
+        return redirect()->route('admin.subscriptions')->with('success', 'Abonnement créé avec succès.');
     }
 
     public function update(Request $request, Subscription $subscription)
